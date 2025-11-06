@@ -1,0 +1,28 @@
+## Build folders
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+[Tt]emp/
+*.tmp
+
+## Visual Studio files
+.vs/
+*.user
+*.suo
+
+## Others
+*.db
+*.sqlite
+*.DS_Store
+
+## Secret files
+appsettings.Development.json
+appsettings.Local.json
+*.Secrets.json
+
+## Node / frontend (por si acaso)
+node_modules/
+
+## Publish
+publish/

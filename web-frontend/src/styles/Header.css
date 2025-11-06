@@ -1,0 +1,33 @@
+/* --- Estilo transparente para Home --- */
+.navbar-transparent {
+  background: transparent !important;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-transparent .navbar-brand,
+.navbar-transparent .nav-link {
+  color: #ffffff !important;
+}
+
+/* --- Hover verde --- */
+.navbar-transparent .nav-link:hover,
+.navbar-dark .nav-link:hover {
+  color: #1ed760 !important; /* Verde tipo Spotify */
+}
+
+/* --- Enlace activo --- */
+.active-link {
+  color: #1ed760 !important;
+  border-bottom: 2px solid #1ed760;
+}
+
+/* --- Espaciado entre los ítems --- */
+.navbar-nav .nav-item {
+  margin-left: 20px;
+}
+
+/* --- Transiciones suaves --- */
+.navbar-brand,
+.nav-link {
+  transition: all 0.3s ease;
+}

@@ -1,0 +1,193 @@
+/* ===== 🎥 VIDEO DE FONDO ===== */
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.background-video {
+  position: fixed; /* 👈 Esto es CLAVE */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2; /* 👈 detrás de todo */
+}
+
+/* ===== 🌌 CAPA OSCURA (overlay) ===== */
+.video-container::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(0, 0, 0, 0.6),
+    rgba(15, 23, 42, 0.7)
+  );
+  z-index: -1; /* 👈 entre el video y el formulario */
+}
+
+/* ===== 🧱 FORMULARIO ===== */
+.reg-container {
+  position: relative;
+  z-index: 2; /* 👈 delante del video */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px;
+}
+
+.reg-card {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  color: #fff;
+  width: 400px;
+  padding: 30px 40px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* ===== 🖋️ TEXTOS ===== */
+.reg-card h2 {
+  text-align: center;
+  margin-bottom: 6px;
+  font-size: 1.8rem;
+}
+
+.subtitle {
+  text-align: center;
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+/* ===== 🧾 CAMPOS ===== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+label {
+  font-size: 0.9rem;
+  color: #e2e8f0;
+}
+
+input {
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: #f8fafc;
+  transition: 0.2s;
+}
+
+input:focus {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+input::placeholder {
+  color: #cbd5e1;
+}
+
+/* ===== 🔑 CONTRASEÑA ===== */
+.password-field {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.show-btn {
+  background: #475569;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.show-btn:hover {
+  background: #64748b;
+}
+
+/* ===== 🔘 BOTONES ===== */
+button[type="submit"] {
+  margin-top: 8px;
+  background: #22c55e;
+  color: #0f172a;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+button[type="submit"]:hover {
+  background: #16a34a;
+  transform: scale(1.02);
+}
+
+button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ===== 📩 MENSAJES ===== */
+.msg {
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.msg.success {
+  background: rgba(34, 197, 94, 0.2);
+  color: #bbf7d0;
+}
+
+.msg.error {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fecaca;
+}
+
+/* ===== 🦶 FOOTER ===== */
+.footer-text {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 0.9rem;
+  color: #cbd5e1;
+}
+
+.footer-text a {
+  color: #22c55e;
+  text-decoration: none;
+}
+
+.footer-text a:hover {
+  text-decoration: underline;
+}
+
+/* ===== ✨ ANIMACIÓN ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

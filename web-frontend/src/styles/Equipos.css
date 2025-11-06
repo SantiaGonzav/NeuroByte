@@ -1,0 +1,205 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+
+body,
+.equipos-wrapper-clean {
+  font-family: "Inter", sans-serif;
+  background: #0a0a0a;
+  color: #f1f5f9;
+  margin: 0;
+  padding: 0;
+}
+
+/* Contenedor principal */
+.equipos-wrapper-clean {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 40px 0;
+  overflow-x: hidden;
+}
+
+.equipos-container-clean {
+  width: 90%;
+  max-width: 1150px;
+  background: #0a0a0a;
+  border-radius: 14px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+  padding-bottom: 20px;
+}
+
+/* Header (Título + Botón) */
+.equipos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 25px 0;
+  padding: 0 10px;
+}
+
+.equipos-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #fafafa;
+}
+
+/* Botón registrar */
+.btn-register {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: 0.25s ease;
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.25);
+}
+.btn-register:hover {
+  background: #1d4ed8;
+  box-shadow: 0 0 15px rgba(37, 99, 235, 0.5);
+}
+
+/* Tabla */
+.equipos-table-clean {
+  width: 100%;
+  border-collapse: collapse;
+  background: #111111;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+/* Encabezado */
+.equipos-table-clean th {
+  background: #1e1e1f;
+  color: #e2e8f0;
+  text-align: center;
+  padding: 14px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.3px;
+}
+
+/* Filas */
+.equipos-table-clean td {
+  text-align: center;
+  padding: 12px;
+  border-bottom: 1px solid #2d2d2d;
+  font-size: 0.9rem;
+  color: #f8fafc;
+  vertical-align: middle;
+}
+.equipos-table-clean tr:hover {
+  background: #1a1a1a;
+  transition: 0.25s;
+}
+
+/* Imagen */
+.img-tabla {
+  width: 65px;
+  height: 50px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid #333;
+}
+
+/* Estados */
+.estado {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.estado.verde {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.15);
+}
+.estado.naranja {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.15);
+}
+.estado.rojo {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.15);
+}
+
+/* Dropdown acciones */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.action-btn {
+  background: transparent;
+  border: 1px solid #6366f1;
+  color: #c7d2fe;
+  padding: 5px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: 0.25s;
+}
+.action-btn:hover {
+  background: #6366f1;
+  color: #fff;
+}
+
+/* Menú flotante */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 32px;
+  right: 0;
+  background: #1e1e1f;
+  border: 1px solid #333;
+  border-radius: 8px;
+  min-width: 120px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+  flex-direction: column;
+  z-index: 10;
+}
+.dropdown:hover .dropdown-menu {
+  display: flex;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.dropdown-menu button {
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 0.8rem;
+  color: #e2e8f0;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.dropdown-menu button:hover {
+  background: #2a2a2a;
+}
+.dropdown-menu .delete {
+  color: #f87171;
+}
+
+/* Total de equipos */
+.equipos-total {
+  margin-top: 16px;
+  font-size: 0.85rem;
+  color: #a1a1aa;
+  text-align: left;
+  padding-left: 10px;
+}
+
+/* Animación */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
