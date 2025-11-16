@@ -2,24 +2,37 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import "../styles/register.css";
-import videoBg from "../assets/videos/HomePage.mp4"; // ✅ Import correcto del video
+import videoBg from "../assets/videos/HomePage.mp4";
 
 export default function Register() {
   const navigate = useNavigate();
+
   const [form, setForm] = useState({
     username: "",
     email: "",
     password: "",
-    role: "User",
+    role: "user", // 👈 corregido (backend espera minúsculas)
+    profileImage: null,
   });
+
+  const [preview, setPreview] = useState(null);
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState(null);
 
-  // 📥 Manejo de inputs
+  // 📥 Manejo de inputs de texto
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // 🖼️ Manejo de archivo de imagen
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setForm((prev) => ({ ...prev, profileImage: file }));
+
+    if (file) setPreview(URL.createObjectURL(file));
+    else setPreview(null);
   };
 
   // 🚀 Envío del formulario
@@ -35,16 +48,22 @@ export default function Register() {
     setMsg(null);
 
     try {
-      const payload = {
-        username: form.username,
-        email: form.email,
-        passwordHash: form.password,
-        role: form.role,
-      };
+      // Crear FormData para enviar imagen + datos
+      const payload = new FormData();
+      payload.append("username", form.username);
+      payload.append("email", form.email);
+      payload.append("password", form.password);
+      payload.append("role", form.role); // 👈 ahora se envía user/admin correctamente
+      if (form.profileImage) {
+        payload.append("profileImage", form.profileImage);
+      }
 
-      await api.post("/auth/register", payload);
+      await api.post("/auth/register", payload, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
       setMsg({ type: "success", text: "Registro exitoso 🎉 Redirigiendo..." });
+
       setTimeout(() => navigate("/login"), 1500);
     } catch (err) {
       console.error("Error en registro:", err);
@@ -65,7 +84,6 @@ export default function Register() {
         Tu navegador no soporta videos HTML5.
       </video>
 
-      {/* Contenido del formulario */}
       <div className="reg-container">
         <div className="reg-card">
           <h2>Crear cuenta</h2>
@@ -116,16 +134,20 @@ export default function Register() {
 
             <label>Rol</label>
             <div className="select-wrapper">
-              <select
-                name="role"
-                value={form.role}
-                onChange={handleChange}
-                required
-              >
-                <option value="User">User</option>
-                <option value="Admin">Admin</option>
+              <select name="role" value={form.role} onChange={handleChange}>
+                <option value="user">Usuario</option>
+                <option value="admin">Administrador</option>
               </select>
             </div>
+
+            <label>Foto de perfil (opcional)</label>
+            <input type="file" accept="image/*" onChange={handleFileChange} />
+
+            {preview && (
+              <div className="preview-container">
+                <img src={preview} alt="Vista previa" className="preview-img" />
+              </div>
+            )}
 
             <button type="submit" disabled={loading}>
               {loading ? "Registrando..." : "Registrar"}

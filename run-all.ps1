@@ -8,6 +8,7 @@ Write-Host "==============================="
 
 dotnet ef database update --project ./AuthService/AuthService.csproj
 dotnet ef database update --project ./EquipService/EquipService.csproj
+dotnet ef database update --project ./RequestService/RequestService.csproj   
 
 Write-Host "==============================="
 Write-Host "   Migraciones completadas"
@@ -21,6 +22,7 @@ Write-Host "==============================="
 
 Start-Process "dotnet" "run --project ./AuthService/AuthService.csproj"
 Start-Process "dotnet" "run --project ./EquipService/EquipService.csproj"
+Start-Process "dotnet" "run --project ./RequestService/RequestService.csproj"   
 
 Start-Sleep -Seconds 2
 

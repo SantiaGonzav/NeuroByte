@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AuthService.Data;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AuthService.Controllers
 {
@@ -6,10 +9,27 @@ namespace AuthService.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult GetUsers()
+        private readonly AppDbContext _context;
+
+        public UserController(AppDbContext context)
         {
-            return Ok(new[] { "User1", "User2" });
+            _context = context;
+        }
+
+        // 🔥 Obtener todos los administradores
+        [HttpGet("admins")]
+        public async Task<IActionResult> GetAdmins()
+        {
+            var admins = await _context.Users
+                .Where(u => u.Role == "admin")
+                .Select(u => new
+                {
+                    u.Id,
+                    u.Email
+                })
+                .ToListAsync();
+
+            return Ok(admins);
         }
     }
 }

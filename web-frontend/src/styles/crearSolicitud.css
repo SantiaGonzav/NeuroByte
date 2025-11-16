@@ -1,0 +1,104 @@
+.crear-solicitud-container {
+  padding: 40px;
+  color: #ffffff;
+  background: #0b0f14;
+  min-height: 100vh;
+}
+
+.titulo {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2rem;
+}
+
+.equipos-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+}
+
+.equipo-card {
+  background: #1a1f24;
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+  box-shadow: 0 0 12px rgba(0,0,0,0.4);
+  text-align: center;
+
+  width: 260px;  
+  margin: auto;
+
+  display: flex;
+  flex-direction: column;   /* 🟢 IMPORTANTE */
+  align-items: center;      /* 🟢 CENTRA TODO */
+  gap: 10px;                /* Espaciado elegante */
+}
+.equipo-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn-solicitar {
+  margin-top: 10px;
+  background: #1ed760;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-solicitar:hover {
+  background: #21f06e;
+}
+
+/* FORM PANEL */
+.form-panel {
+  background: #11161c;
+  padding: 25px;
+  margin-top: 40px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+.form-panel h2 {
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+input, textarea {
+  background: #1d242c;
+  border: 1px solid #2a323c;
+  padding: 10px;
+  color: white;
+  border-radius: 8px;
+}
+
+.btn-enviar {
+  background: #1ed760;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-cancelar {
+  background: #ff4d4d;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-cancelar:hover {
+  background: #ff6666;
+}

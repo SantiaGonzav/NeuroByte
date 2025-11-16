@@ -1,0 +1,60 @@
+.mis-solicitudes-bg {
+  min-height: 100vh;
+  width: 100%;
+  padding-top: 100px; /* evita que el header tape contenido */
+
+  /* 🔵 Fondo igual al login: azul profundo + degradado suave */
+  background: radial-gradient(
+      circle at top,
+      rgba(16, 58, 114, 0.8) 0%,   /* azul brillante */
+      rgba(10, 29, 55, 0.95) 60%,  /* azul profundo */
+      rgba(6, 14, 28, 1) 100%      /* casi negro azul */
+    ),
+    #0a1d37;
+
+  color: #fff;
+  font-family: "Inter", sans-serif;
+}
+
+.mis-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 20px;
+  backdrop-filter: blur(6px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mis-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.mis-titulo {
+  text-align: center;
+  font-size: 2.3rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+.mis-badge {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.mis-badge.pendiente {
+  background-color: #f9c74f;
+  color: #000;
+}
+
+.mis-badge.aprobada {
+  background-color: #43aa8b;
+  color: #fff;
+}
+
+.mis-badge.rechazada {
+  background-color: #f94144;
+  color: #fff;
+}

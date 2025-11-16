@@ -1,0 +1,78 @@
+.admin-bg {
+  min-height: 100vh;
+  width: 100%;
+  padding-top: 100px;
+  color: white;
+
+  background: radial-gradient(
+      circle at top,
+      rgba(16, 58, 114, 0.8),
+      rgba(10, 29, 55, 0.95),
+      rgba(6, 14, 28, 1)
+    );
+}
+
+.admin-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+.admin-card {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 15px;
+  padding: 20px;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: transform 0.2s ease;
+}
+
+.admin-card:hover {
+  transform: translateY(-5px);
+}
+
+.estado-tag {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.estado-tag.aprobada {
+  background: #43aa8b;
+}
+
+.estado-tag.rechazada {
+  background: #f94144;
+}
+
+.estado-tag.pendiente {
+  background: #f9c74f;
+  color: black;
+}
+
+.btn-group-admin {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-aceptar,
+.btn-rechazar {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-aceptar {
+  background-color: #43aa8b;
+  color: white;
+}
+
+.btn-rechazar {
+  background-color: #f94144;
+  color: white;
+}

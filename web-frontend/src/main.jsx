@@ -4,10 +4,18 @@ import App from "./App.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter } from "react-router-dom";
 
+// Contextos globales
+import { AuthProvider } from "./context/AuthContext.jsx";
+import { SolicitudesProvider } from "./context/SolicitudesContext.jsx";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   // <React.StrictMode>
   <BrowserRouter>
-    <App />
+    <AuthProvider>
+      <SolicitudesProvider>
+        <App />
+      </SolicitudesProvider>
+    </AuthProvider>
   </BrowserRouter>
   // </React.StrictMode>
 );

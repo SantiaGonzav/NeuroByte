@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using EquipService.Infrastructure.Persistence;
 using EquipService.Domain.Entities;
+using EquipService.Application.DTOs;
 
 namespace EquipService.Controllers
 {
@@ -15,73 +17,93 @@ namespace EquipService.Controllers
             _context = context;
         }
 
-        // ✅ GET: obtener todos los equipos
+        // ✅ Obtener todos los equipos
         [HttpGet]
-        public IActionResult GetEquipos()
+        public async Task<IActionResult> GetEquipos()
         {
-            return Ok(_context.EquiposMedicos.ToList());
+            var equipos = await _context.EquiposMedicos.AsNoTracking().ToListAsync();
+            return Ok(equipos);
         }
 
-        // ✅ GET by ID: obtener un equipo específico
-        [HttpGet("{id}")]
-        public IActionResult GetEquipoPorId(int id)
+        // ✅ Obtener un equipo por ID
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetEquipoPorId(int id)
         {
-            var equipo = _context.EquiposMedicos.Find(id);
+            var equipo = await _context.EquiposMedicos.FindAsync(id);
             if (equipo == null)
                 return NotFound($"No se encontró un equipo con ID {id}");
 
             return Ok(equipo);
         }
 
-        // ✅ POST: crear un nuevo equipo
+        // ✅ Crear un nuevo equipo
         [HttpPost]
-        public IActionResult CrearEquipo([FromBody] EquipoMedico nuevoEquipo)
+        public async Task<IActionResult> CrearEquipo([FromBody] EquipoMedicoDto dto)
         {
-            if (nuevoEquipo == null)
-                return BadRequest("Los datos del equipo no pueden estar vacíos.");
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var nuevoEquipo = new EquipoMedico
+            {
+                Nombre = dto.Nombre,
+                Modelo = dto.Modelo,
+                NumeroSerie = dto.NumeroSerie,
+                FechaAdquisicion = dto.FechaAdquisicion,
+                Imagen = dto.Imagen,
+                Estado = ParseEstado(dto.Estado)
+            };
 
             _context.EquiposMedicos.Add(nuevoEquipo);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetEquipoPorId), new { id = nuevoEquipo.Id }, nuevoEquipo);
         }
 
-        // ✅ PUT: actualizar un equipo existente
-        [HttpPut("{id}")]
-        public IActionResult ActualizarEquipo(int id, [FromBody] EquipoMedico equipoActualizado)
+        // ✅ Actualizar equipo existente
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> ActualizarEquipo(int id, [FromBody] EquipoMedicoDto dto)
         {
-            var equipo = _context.EquiposMedicos.Find(id);
+            var equipo = await _context.EquiposMedicos.FindAsync(id);
             if (equipo == null)
                 return NotFound($"No se encontró un equipo con ID {id}");
 
-            // Actualizar campos
-            equipo.Nombre = equipoActualizado.Nombre;
-            equipo.NumeroSerie = equipoActualizado.NumeroSerie;
-            equipo.Modelo = equipoActualizado.Modelo;
-            equipo.FechaAdquisicion = equipoActualizado.FechaAdquisicion;
-            equipo.Estado = equipoActualizado.Estado;
-            equipo.Imagen = equipoActualizado.Imagen;
+            equipo.Nombre = dto.Nombre;
+            equipo.Modelo = dto.Modelo;
+            equipo.NumeroSerie = dto.NumeroSerie;
+            equipo.FechaAdquisicion = dto.FechaAdquisicion;
+            equipo.Imagen = dto.Imagen;
+            equipo.Estado = ParseEstado(dto.Estado);
 
-
-
-
-
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return Ok(equipo);
         }
 
-        // ✅ DELETE: eliminar un equipo por ID
-        [HttpDelete("{id}")]
-        public IActionResult EliminarEquipo(int id)
+        // ✅ Eliminar equipo
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> EliminarEquipo(int id)
         {
-            var equipo = _context.EquiposMedicos.Find(id);
+            var equipo = await _context.EquiposMedicos.FindAsync(id);
             if (equipo == null)
                 return NotFound($"No se encontró un equipo con ID {id}");
 
             _context.EquiposMedicos.Remove(equipo);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
 
-            return NoContent(); // 204: Eliminado correctamente sin contenido
+        // 🔧 Método auxiliar para convertir texto → enum
+        private static EquipoEstado ParseEstado(string estadoTexto)
+        {
+            if (string.IsNullOrWhiteSpace(estadoTexto))
+                return EquipoEstado.Disponible;
+
+            return estadoTexto.Trim().ToLowerInvariant() switch
+            {
+                "disponible" => EquipoEstado.Disponible,
+                "ocupado" => EquipoEstado.Ocupado,
+                "mantenimiento" => EquipoEstado.Mantenimiento,
+                _ => EquipoEstado.Disponible
+            };
         }
     }
 }

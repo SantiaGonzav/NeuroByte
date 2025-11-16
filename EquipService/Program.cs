@@ -4,20 +4,27 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var frontendOrigin = "http://localhost:5173";
+// 🔹 Permitir acceso desde tu frontend (Vite en puertos 5173 y 5174)
+var frontendOrigins = new[]
+{
+    "http://localhost:5173",
+    "http://localhost:5174"
+};
 
+// 🔹 Configurar CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins(frontendOrigin)
+        policy.WithOrigins(frontendOrigins)
               .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowAnyMethod()
+              .AllowCredentials();
     });
 });
 
+// 🔹 Registrar servicios
 builder.Services.AddControllers();
-
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -28,12 +35,13 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "EquipService API",
         Version = "v1",
-        Description = "API para gestión de equipos"
+        Description = "API para gestión de equipos médicos"
     });
 });
 
 var app = builder.Build();
 
+// 🔹 Middleware de desarrollo
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -47,12 +55,10 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
-// 👇 Agrega esta línea aquí
+// ⚠️ CORS DEBE IR ANTES DE `UseAuthorization()`
 app.UseCors("AllowFrontend");
 
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
-

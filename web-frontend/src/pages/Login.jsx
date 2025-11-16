@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
+import { AuthContext } from "../context/AuthContext";   // <-- IMPORTANTE
 import "../styles/register.css";
-import videoBg from "../assets/videos/HomePage.mp4"; // 👈 Importa el video
+import videoBg from "../assets/videos/HomePage.mp4";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext); // <-- AQUÍ TRAEMOS login()
+  
   const [form, setForm] = useState({ email: "", password: "" });
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -31,17 +34,19 @@ export default function Login() {
     setMsg(null);
 
     try {
+      // 👇 Backend espera password, NO passwordHash
       const payload = {
         email: form.email,
-        passwordHash: form.password,
+        password: form.password,
       };
 
       const res = await api.post("/auth/login", payload);
 
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+      // 🔥 AHORA SE USA el AuthContext.login()
+      login(res.data);
 
       setMsg({ type: "success", text: "Inicio de sesión exitoso 🎉" });
+
       setTimeout(() => navigate("/"), 1200);
     } catch (err) {
       console.error("Error en login:", err);
@@ -69,7 +74,7 @@ export default function Login() {
       const res = await api.post("/auth/forgot-password", { email: resetEmail });
       setResetMsg({
         type: "success",
-        text: res.data || "Te hemos enviado un correo con las instrucciones 📩",
+        text: res.data || "Te hemos enviado un correo 📩",
       });
     } catch (err) {
       console.error("Error en recuperación:", err);
@@ -84,12 +89,10 @@ export default function Login() {
 
   return (
     <div className="video-container">
-      {/* 🎥 Fondo de video */}
       <video className="background-video" autoPlay loop muted playsInline>
         <source src={videoBg} type="video/mp4" />
       </video>
 
-      {/* Contenido del login */}
       <div className="reg-container">
         <div className="reg-card">
           {!resetMode ? (

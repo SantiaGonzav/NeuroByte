@@ -31,3 +31,117 @@
 .nav-link {
   transition: all 0.3s ease;
 }
+
+/* --- Imagen de perfil --- */
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: 12px;
+  cursor: pointer;
+  object-fit: cover;
+  border: 2px solid #ffffff;
+  transition: transform 0.2s ease, border-color 0.3s ease;
+  z-index: 9999;
+}
+
+.profile-pic:hover {
+  transform: scale(1.07);
+  border-color: #1ed760;
+}
+
+/* --- Contenedor del menú de usuario --- */
+.user-menu {
+  position: relative;
+  z-index: 99999; /* 👈 Menú siempre por encima */
+}
+
+/* --- Menú desplegable del usuario (forzado para sobrescribir Bootstrap) --- */
+.dropdown-menu.show-menu {
+  position: absolute;
+  right: 0;
+  top: 55px;
+  background: #121212;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  min-width: 170px;
+  z-index: 999999; /* Siempre arriba */
+  overflow: hidden;
+  display: flex !important;   /* 👈 CLAVE para que funcione */
+  flex-direction: column;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+/* --- Ítems del menú --- */
+.dropdown-item {
+  color: #ffffff !important;
+  padding: 10px !important;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.3s ease;
+  font-weight: 500;
+  background: none !important;
+}
+
+.dropdown-item:hover {
+  background-color: #1ed760 !important;
+  color: #121212 !important;
+}
+
+/* --- Circulito de notificación (para admin) --- */
+.badge-notify {
+  position: absolute;
+  top: 4px;
+  right: -8px;
+  background: #1ed760;
+  color: #121212;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 3px 7px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+}
+
+/* --- Animación de aparición suave --- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Adaptabilidad móvil --- */
+@media (max-width: 992px) {
+  .navbar-nav .nav-item {
+    margin-left: 12px;
+  }
+
+  .profile-pic {
+    width: 36px;
+    height: 36px;
+  }
+
+  .show-menu {
+    top: 50px;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-nav .nav-item {
+    margin-left: 8px;
+  }
+
+  .profile-pic {
+    width: 32px;
+    height: 32px;
+  }
+
+  .show-menu {
+    min-width: 140px;
+  }
+}
